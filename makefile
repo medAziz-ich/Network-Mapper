@@ -1,25 +1,17 @@
-# Compiler
-CC = cc
+CC      ?= cc
+CFLAGS  ?= -O2 -g
+CFLAGS  += -Wall -Wextra -std=gnu11 -pthread
+LDFLAGS += -pthread
 
-# Compiler Flags
-CFLAGS = -Wall -std=c2x -pthread -g -O2
-
-# Source and Object Files
-SRC = nmzyz.c
-OBJ = nmzyz.o
 EXEC = nmzyz
+SRC  = nmzyz.c
 
-# Default target: Build the program
+.PHONY: all clean
+
 all: $(EXEC)
 
-# Compile the object file
-$(OBJ): $(SRC)
-	$(CC) $(CFLAGS) -c $(SRC) -o $(OBJ)
+$(EXEC): $(SRC)
+	$(CC) $(CFLAGS) $(SRC) -o $(EXEC) $(LDFLAGS)
 
-# Link the executable
-$(EXEC): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(EXEC)
-
-# Clean compiled files
 clean:
-	rm -f $(OBJ) $(EXEC)
+	rm -f $(EXEC) *.o
